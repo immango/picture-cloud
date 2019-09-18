@@ -1,0 +1,48 @@
+
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#top{
+    width: auto;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: "Serif";
+    font-size: 30px;
+    font-style: italic;
+    color:  #228B22;
+}
+
+#center{
+    background-color: #F5F5F5;
+    width: 50%;
+    height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer{
+    color: #C8C8C8;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+#law,#count{
+    text-align: center;
+}
+
+#url{
+    margin-top: 80px;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>公益图床</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/static/js/upload.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/static/css/upload.css}">
+</head>
+<body>
+
+<div id="top">
+    <p>公益图床服务</p>
+</div>
+<div id="law">
+    <p>欢迎使用本服务，您可以选择<a href="javascript:;" data-toggle="modal" data-target="#donateModal">捐赠本站</a>，
+        或者<span data-toggle="tooltip" data-placement="top" title="提建议请访问：捐赠本站->捐赠列表 :)"><a href="">提建议</a></span>。
+        或者使用本站的<span data-toggle="tooltip" data-placement="top" title="骚年莫慌，这个功能还没做好"><a href="">短链转换服务</a></span>。
+    </p>
+    <p>如果你选择使用本图床服务，默认你已经阅读并了解相关
+        <a href="javascript:;" data-toggle="modal" data-target="#userAgreementModal">用户协议</a>。</p>
+</div>
+<div id="center">
+    <div id="pform">
+        <form action="/uploadImg" method="post" enctype="multipart/form-data">
+            <input name="uploadImg" type="file" accept="image/jpeg,image/png,image/gif" required>
+            <input type="submit" name="" value="上传">
+        </form>
+        <code>图片请小于20M. </code>
+        <code th:if="${responseMap} and ${responseMap.code == '200'}"> 状态
+            <i class="fa fa-check" style="font-size:12px;color:green"></i> [[${responseMap.message}]]</code>
+
+        <code th:if="${responseMap} and ${responseMap.code == '-500'}"> 状态
+            <i class="fa fa-close" style="font-size:12px;color:red"></i> [[${responseMap.message}]]
+        </code>
+
+        <div id="url">
+            <p>您可以使用以下任意一个连接访问刚刚上传的图片:)</p>
+            <label for="link">图片地址：</label><input id="link" type="text" name="link" style="width: 75%;" th:value="${responseMap} ? ${responseMap.URL} : ''">
+
+            <p></p>
+
+            <label for="slink">图片短链地址
+                <span data-toggle="tooltip" data-placement="top" title="短链是将长链接转换成方便使用的短链接">
+                    <i class="fa fa-question-circle-o"></i></span>
+                ：</label>
+            <input id="slink" type="text" name="slink" style="width: 58%;" disabled value="短链功能即将上线...">
+
+        </div>
+    </div>
+</div>
+<div id="count">
+    <p>本站已提供: <u><span id="imageCount"> </span></u> 次图片存储服务</p>
+</div>
+<div id="footer">
+    <p>推荐使用Google浏览器获得极致体验。<br>
+        本项目为公益项目，请不要上传违反中华人民共和国法律的图片。
+        </p>
+    <p>2018-<span id="nowTime"></span> &copy; <span id="AMVPE">AMVPE.COM</span> Aisa/Shanghai. <img id="y" alt="鹰" th:width="20" th:height="20" th:src="@{/static/img/GY.png}"></p>
+</div>
+
+
+
+<!-- 用户协议模态框（Modal） -->
+<div class="modal fade" id="userAgreementModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    用户使用协议
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>如果您使用本站提供的服务，那么默认你已经阅读并了解并遵守本协议。</p>
+                <p>1.本项目为公益项目，你可以选择捐赠或者对本项目提建议。</p>
+                <p>2.本项目目前为开源项目，可以在Github上访问<a href="">本项目</a>。</p>
+                <p>3.请遵守中华人民共和国法律法规，请勿上传违法犯罪图片。</p>
+                <p>4.请遵守当地法律，请勿上传违反当地法律的图片。</p>
+                <p>5.如果您在使用本站服务的过程中存在违反法律的行为，本站有权停止对您的服务。</p>
+                <p>6.对于用户不正当使用本站服务而造成的违法行为，本站不承担任何法律责任。</p>
+                <p>7.未尽事宜，解释权归本站所有。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" 
+                        data-dismiss="modal">我已阅读并遵守该协议
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 用户协议模态框（Modal） -->
+<div class="modal fade" id="donateModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    捐赠
+                </h4>
+            </div>
+            <div align="center">
+                    <img th:src="@{/static/img/donate.png}" alt="啥?捐赠二维码没了?等着,我去锤程序员...">
+            </div>
+            <div>
+                捐赠时记得备注哦 :) <a href="/donateList" target="_blank"> 捐赠列表</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" 
+                        data-dismiss="modal">确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+</html>

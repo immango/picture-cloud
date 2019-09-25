@@ -16,6 +16,18 @@ $(document).ready(function(){
 
     $.get("/nowTime",function (data, status) {
         $("#nowTime").text(data);
-    })
-
+    });
 });
+
+function checkForm() {
+
+    var size = $("#uploadImg")[0].files[0].size;
+    if (size > 20000000) {
+        $("#max-size").removeAttr("hidden");
+        $("#uploadImg").val("");
+        return false;
+    }
+    //submit success
+    $("#uploading").removeAttr("hidden");
+    return true;
+};

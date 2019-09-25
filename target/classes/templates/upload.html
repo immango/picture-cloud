@@ -19,19 +19,26 @@
 </div>
 <div id="law">
     <p>欢迎使用本服务，您可以选择<a href="javascript:;" data-toggle="modal" data-target="#donateModal">捐赠本站</a>，
-        或者<span data-toggle="tooltip" data-placement="top" title="提建议请访问：捐赠本站->捐赠列表 :)"><a href="">提建议</a></span>。
-        或者使用本站的<span data-toggle="tooltip" data-placement="top" title="骚年莫慌，这个功能还没做好"><a href="">短链转换服务</a></span>。
+        或者<span data-toggle="tooltip" data-placement="top" title="提建议请访问：捐赠本站->捐赠列表 :)"><a href="javascript:;">提建议</a></span>。
+        或者使用本站的<span data-toggle="tooltip" data-placement="top" title="骚年莫慌，这个功能还没做好"><a href="javascript:;">短链转换服务</a></span>。
     </p>
     <p>如果你选择使用本图床服务，默认你已经阅读并了解相关
         <a href="javascript:;" data-toggle="modal" data-target="#userAgreementModal">用户协议</a>。</p>
 </div>
 <div id="center">
     <div id="pform">
-        <form action="/uploadImg" method="post" enctype="multipart/form-data">
-            <input name="uploadImg" type="file" accept="image/jpeg,image/png,image/gif" required>
-            <input type="submit" name="" value="上传">
+        <form id="uploadImgForm" action="/uploadImg" method="post" enctype="multipart/form-data" onsubmit="return checkForm();">
+            <input id="uploadImg" name="uploadImg" type="file" accept="image/jpeg,image/png,image/gif" required>
+            <input type="submit" name="submit" value="上传">
         </form>
         <code>图片请小于20M. </code>
+
+        <code id="uploading" hidden="hidden"> 状态 <i class="fa fa-spinner fa-pulse"></i> uploading...
+        </code>
+
+        <code id="max-size" hidden="hidden"> 状态
+            <i class="fa fa-close" style="font-size:12px;color:red"></i> 图片请不要超过20M
+        </code>
         <code th:if="${responseMap} and ${responseMap.code == '200'}"> 状态
             <i class="fa fa-check" style="font-size:12px;color:green"></i> [[${responseMap.message}]]</code>
 
@@ -45,11 +52,11 @@
 
             <p></p>
 
-            <label for="slink">图片短链地址
-                <span data-toggle="tooltip" data-placement="top" title="短链是将长链接转换成方便使用的短链接">
-                    <i class="fa fa-question-circle-o"></i></span>
-                ：</label>
-            <input id="slink" type="text" name="slink" style="width: 58%;" disabled value="短链功能即将上线...">
+            <!--<label for="slink">图片短链地址-->
+                <!--<span data-toggle="tooltip" data-placement="top" title="短链是将长链接转换成方便使用的短链接">-->
+                    <!--<i class="fa fa-question-circle-o"></i></span>-->
+                <!--：</label>-->
+            <!--<input id="slink" type="text" name="slink" style="width: 58%;" disabled value="短链功能即将上线...">-->
 
         </div>
     </div>

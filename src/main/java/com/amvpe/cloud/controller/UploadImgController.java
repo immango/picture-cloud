@@ -4,13 +4,13 @@ package com.amvpe.cloud.controller;
 import com.amvpe.cloud.config.UploadImgConfig;
 import com.amvpe.cloud.entity.Counter;
 import com.amvpe.cloud.service.StorageImageService;
+import com.amvpe.cloud.tools.Init;
 import com.amvpe.cloud.tools.UploadTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +33,8 @@ public class UploadImgController {
 
     @Autowired
     StorageImageService storageImageService;
+    @Autowired
+    Init init;
 
     /**
      * 存储文件的路径，在application.properties设置
@@ -77,7 +78,7 @@ public class UploadImgController {
         responseMap.put("code","200");
 
         //生成图片访问路径
-        String imgURL = UploadImgConfig.resourcesPattern + imgName;
+        String imgURL = init.getHost() + UploadImgConfig.resourcesPattern + imgName;
         responseMap.put("URL",imgURL);
 
         redirectAttributes.addFlashAttribute("responseMap", responseMap);

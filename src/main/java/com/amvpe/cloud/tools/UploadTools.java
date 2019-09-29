@@ -38,7 +38,6 @@ public class UploadTools {
         String realContentType;
 
         byte[] imgByte = null;
-
         try {
             imgByte = img.getBytes();
         } catch (IOException e) {
@@ -53,13 +52,20 @@ public class UploadTools {
         upLoadToolsLogger.info("contentType: " + contentType + ", realContentType: " + realContentType);
 
         // 判断文件类型和文件后缀是否符合
-        boolean verified = FileType.fileType.get(contentType)[0].equalsIgnoreCase(realContentType);
-        upLoadToolsLogger.info("文件类型匹配情况：" + verified);
-        if (verified) {
-            return true;
+        //默认值为false，即不匹配
+        boolean verified = false;
+
+        //捕获 FileType.fileType.get(contentType)可能出现的空指针异常
+        //如果发生异常则上传的文件非 jpeg/png/gif 三种类型
+        try {
+            verified = FileType.fileType.get(contentType)[0].equalsIgnoreCase(realContentType);
+        }catch (Exception e){
+            upLoadToolsLogger.error("文件类型不存在! 上传的文件类型为：" + contentType);
         }
 
-        return false;
+        upLoadToolsLogger.info("文件类型匹配情况：" + verified);
+
+        return verified;
     }
 
     /**
@@ -73,7 +79,7 @@ public class UploadTools {
 
     /**
      * 获取远端客户端地址，ip等等信息
-     * @param request
+     * @param request 请求
      */
     public static void ipAddress(HttpServletRequest request) {
         String remoteAddr = request.getRemoteAddr();

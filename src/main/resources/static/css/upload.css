@@ -45,3 +45,12 @@ body{
 #url{
     margin-top: 80px;
 }
+
+div.footerC a:link {
+    text-decoration:none;
+    color: #C8C8C8;
+}
+div.footerC a:visited {
+    text-decoration:none;
+    color: #C8C8C8;
+}
